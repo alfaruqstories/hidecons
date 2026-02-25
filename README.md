@@ -8,7 +8,11 @@ Shows an eye icon (👁) in your menu bar. Click it to hide or show desktop icon
 
 ## How to use
 
-### Option 1: Run the installer
+### Option 1: Download directly
+
+Download `DesktopToggle.zip` from this repo, unzip it, and double-click `DesktopToggle.app`.
+
+### Option 2: Run the installer
 
 ```bash
 git clone https://github.com/alfaruqstories/hidecons.git
