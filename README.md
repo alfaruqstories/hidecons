@@ -1,4 +1,4 @@
-# DesktopToggle
+# Hidecons
 
 A simple macOS menu bar app to toggle desktop icons on/off.
 
@@ -10,7 +10,7 @@ Shows an eye icon (👁) in your menu bar. Click it to hide or show desktop icon
 
 ### Option 1: Download directly
 
-Download `DesktopToggle.zip` from this repo, unzip it, and double-click `DesktopToggle.app`.
+Download `Hidecons.zip` from this repo, unzip it, and double-click `Hidecons.app`.
 
 ### Option 2: Run the installer
 
@@ -20,16 +20,16 @@ cd hidecons
 ./install.sh
 ```
 
-### Option 2: Build manually
+### Option 3: Build manually
 
 ```bash
 git clone https://github.com/alfaruqstories/hidecons.git
 cd hidecons
-swiftc DesktopToggle.swift -o DesktopToggle.app
-open DesktopToggle.app
+swiftc Hidecons.swift -o Hidecons.app
+open Hidecons.app
 ```
 
-Move `DesktopToggle.app` to `/Applications` if you want it to persist.
+Move `Hidecons.app` to `/Applications` if you want it to persist.
 
 ## Features
 

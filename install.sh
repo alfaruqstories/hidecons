@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-APP_NAME="DesktopToggle"
+APP_NAME="Hidecons"
 APP_DIR="$HOME/Applications/$APP_NAME.app"
 CONTENTS="$APP_DIR/Contents"
 MACOS="$CONTENTS/MacOS"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "🔨 Compiling $APP_NAME..."
-swiftc -O -o "/tmp/$APP_NAME" "$SCRIPT_DIR/DesktopToggle.swift" -framework Cocoa
+swiftc -O -o "/tmp/$APP_NAME" "$SCRIPT_DIR/Hidecons.swift" -framework Cocoa
 
 echo "📦 Creating app bundle..."
 mkdir -p "$MACOS"
@@ -21,13 +21,13 @@ cat > "$CONTENTS/Info.plist" << 'EOF'
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>DesktopToggle</string>
+    <string>Hidecons</string>
     <key>CFBundleIdentifier</key>
-    <string>com.local.desktoptoggle</string>
+    <string>com.hidecons.app</string>
     <key>CFBundleVersion</key>
     <string>1.0</string>
     <key>CFBundleExecutable</key>
-    <string>DesktopToggle</string>
+    <string>Hidecons</string>
     <key>LSBackgroundOnly</key>
     <true/>
     <key>LSUIElement</key>

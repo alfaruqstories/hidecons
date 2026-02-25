@@ -68,7 +68,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func updateIcon() {
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: isHidden ? "eye.slash" : "eye", accessibilityDescription: "Desktop Toggle")
+            button.image = NSImage(systemSymbolName: isHidden ? "eye.slash" : "eye", accessibilityDescription: "HideCons")
         }
     }
 }
