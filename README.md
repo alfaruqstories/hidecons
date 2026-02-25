@@ -8,9 +8,14 @@ Shows an eye icon (👁) in your menu bar. Click it to hide or show desktop icon
 
 ## How to use
 
-### Option 1: Download directly
+### Option 1: Quick run (Terminal)
 
-[Click here to download Hidecons.zip](https://github.com/alfaruqstories/hidecons/raw/main/Hidecons.zip), unzip it, and double-click `Hidecons.app`.
+```bash
+git clone https://github.com/alfaruqstories/hidecons.git
+cd hidecons
+swiftc Hidecons.swift -o Hidecons.app
+./Hidecons.app/Contents/MacOS/Hidecons
+```
 
 ### Option 2: Run the installer
 
@@ -20,16 +25,11 @@ cd hidecons
 ./install.sh
 ```
 
-### Option 3: Build manually
-
-```bash
-git clone https://github.com/alfaruqstories/hidecons.git
-cd hidecons
-swiftc Hidecons.swift -o Hidecons.app
-open Hidecons.app
-```
-
 Move `Hidecons.app` to `/Applications` if you want it to persist.
+
+## Note
+
+When you toggle icons, Finder restarts briefly. If no other apps are open, macOS may switch away from your current desktop - just navigate back. Your icons will stay hidden.
 
 ## Features
 
@@ -40,7 +40,6 @@ Move `Hidecons.app` to `/Applications` if you want it to persist.
 ## Requirements
 
 - macOS 10.15+
-- Finder will restart when toggling (brief flash)
 
 ## Troubleshooting
 
