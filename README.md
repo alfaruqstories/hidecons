@@ -42,6 +42,14 @@ Move `Hidecons.app` to `/Applications` if you want it to persist.
 - macOS 10.15+
 - Finder will restart when toggling (brief flash)
 
+## Troubleshooting
+
+If you get a "file is corrupt" or "unidentified developer" warning when opening:
+1. Right-click `Hidecons.app` → Open → click "Open"
+2. Or run: `xattr -cr ~/Downloads/Hidecons.app`
+
+This is a one-time macOS security check for unsigned apps.
+
 ## Fork & Use
 
 This is free, open source. Fork it, modify it, use it however you want. No contributions needed—just fork and run.
