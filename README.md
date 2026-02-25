@@ -10,7 +10,7 @@ Shows an eye icon (👁) in your menu bar. Click it to hide or show desktop icon
 
 ### Option 1: Download directly
 
-Download `Hidecons.zip` from this repo, unzip it, and double-click `Hidecons.app`.
+[Click here to download Hidecons.zip](https://github.com/alfaruqstories/hidecons/raw/main/Hidecons.zip), unzip it, and double-click `Hidecons.app`.
 
 ### Option 2: Run the installer
 
