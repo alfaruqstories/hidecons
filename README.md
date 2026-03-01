@@ -4,7 +4,7 @@ A simple macOS menu bar app to toggle desktop icons on/off.
 
 ## What it does
 
-Shows an eye icon (👁) in your menu bar. Click it to hide or show desktop icons. Useful for clean workspaces or screenshots.
+Shows a grid icon in your menu bar. Click it to hide or show desktop icons. Useful for clean workspaces or screenshots.
 
 ## How to use
 
@@ -34,6 +34,7 @@ When you toggle icons, Finder restarts briefly. If no other apps are open, macOS
 ## Features
 
 - Click menu bar icon → Toggle desktop icons
+- Launch at Login toggle built into the menu (no System Settings needed)
 - Click "Quit" → Restores icons before closing
 - Runs in background (no dock icon)
 
