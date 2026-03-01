@@ -12,6 +12,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var notificationsItem: NSMenuItem!
     var menu: NSMenu!
     var globalHotkeyMonitor: Any?
+    var restoreTimer: Timer?
+    var pulseTimer: Timer?
+    var pulsePhase = false
 
     var notificationsEnabled: Bool {
         get { UserDefaults.standard.bool(forKey: "notificationsEnabled") }
@@ -124,7 +127,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             sendToggleNotification()
         }
 
-        updateUI()
+        // Restoring takes longer than hiding — show a pulsing indicator
+        if !isHidden {
+            showRestoreIndicator()
+        } else {
+            updateUI()
+        }
     }
 
     @objc func undoToggle() {
@@ -148,7 +156,42 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         try? killTask.run()
 
         NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .default)
-        updateUI()
+
+        if !isHidden {
+            showRestoreIndicator()
+        } else {
+            updateUI()
+        }
+    }
+
+    // Pulses arrow.clockwise ↔ grid for ~2s while Finder reloads the desktop
+    func showRestoreIndicator() {
+        updateToggleItem()
+        updateUndoItem()
+        updateLaunchAtLoginItem()
+        updateNotificationsItem()
+        if let button = statusItem.button {
+            button.toolTip = "Desktop icons: restoring…"
+        }
+
+        pulseTimer?.invalidate()
+        restoreTimer?.invalidate()
+        pulsePhase = false
+
+        pulseTimer = Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { [weak self] _ in
+            guard let self else { return }
+            self.pulsePhase.toggle()
+            let symbol = self.pulsePhase ? "arrow.clockwise" : "square.grid.2x2"
+            if let image = NSImage(systemSymbolName: symbol, accessibilityDescription: "Hidecons") {
+                image.isTemplate = true
+                self.statusItem.button?.image = image
+            }
+        }
+
+        restoreTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { [weak self] _ in
+            self?.pulseTimer?.invalidate()
+            self?.updateUI()
+        }
     }
 
     @objc func toggleLaunchAtLogin() {
