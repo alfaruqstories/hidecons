@@ -6,10 +6,11 @@ A lightweight macOS menu bar app to hide and show desktop icons instantly.
 
 ## What it does
 
-Sits in your menu bar as a small grid icon. One click hides all desktop icons; another click brings them back. Useful for clean screenshots, presentations, or a distraction-free workspace.
+Sits in your menu bar as a small grid icon. Left-click hides all desktop icons; left-click again brings them back. Useful for clean screenshots, presentations, focus sessions, or video calls.
 
 - **Outline grid** — icons are visible
 - **Filled grid** — icons are hidden
+- **Pulsing arrow** — icons are restoring (Finder is reloading)
 
 ---
 
@@ -21,7 +22,7 @@ cd hidecons
 ./install.sh
 ```
 
-The script compiles the Swift source, builds an app bundle, installs it to `~/Applications/Hidecons.app`, and launches it immediately.
+The script compiles the Swift source, generates the app icon, builds an app bundle, installs it to `~/Applications/Hidecons.app`, and launches it immediately.
 
 ---
 
@@ -32,30 +33,50 @@ After launching, a grid icon appears in your menu bar.
 | Action | Result |
 |---|---|
 | **Left click** the icon | Instantly toggles desktop icons |
-| **⌥⌘H** (anywhere) | Same toggle, no mouse needed |
+| **⌥⌘H** from any app | Same toggle — no mouse needed |
 | **Right click** the icon | Opens settings menu |
-| Undo | Reverts the last toggle (shown in menu after any toggle) |
-| Launch at Login | Toggles auto-start on login (checkmark = enabled) |
-| Notify on Toggle | Enables a macOS notification on each hide/show |
-| Report a Bug | Opens GitHub Issues |
+| Undo | Reverts the last toggle (appears in menu after any toggle) |
+| Launch at Login | Toggles auto-start on login — checkmark = enabled |
+| Notify on Toggle | Sends a macOS notification on each hide/show — off by default |
+| Report a Bug | Opens GitHub Issues in the browser |
 | Quit | Exits — icons stay in their current state |
 
-**State is remembered across reboots.** If your icons were hidden when you shut down, they stay hidden when you start up. Hidecons reads the current Finder preference on launch and picks up from there.
+**State is remembered across reboots.** If icons were hidden when you shut down, they stay hidden on startup. Hidecons reads the current Finder preference on launch and picks up from there.
 
 **Launch at Login** is built into the app — no System Settings or Login Items configuration needed.
 
 ---
 
+## Features
+
+- Left-click instant toggle — no menu to open
+- Global hotkey ⌥⌘H — toggle from any app
+- Undo — single-level revert in the right-click menu
+- State remembrance — persists across reboots and restarts
+- Restore indicator — icon pulses while Finder reloads the desktop
+- Launch at Login — built-in, no System Settings needed
+- Haptic feedback on toggle (MacBooks with Force Touch)
+- Tooltip showing current state on hover
+- Optional toggle notifications via macOS notification centre
+- Custom app icon — shows correctly in System Settings → Login Items
+- Adapts to dark, light, and tinted menu bar themes
+
+---
+
 ## How it works
 
-Hidecons writes a single macOS preference and restarts Finder:
+Hidecons writes a single macOS preference and sends a reload signal to Finder:
 
 ```bash
 defaults write com.apple.finder CreateDesktop -bool false
 killall -HUP Finder
 ```
 
-This is the standard technique used by all desktop-hiding utilities on macOS. Finder restarts in under a second and re-reads its preferences. The preference persists in Finder's plist — no database or separate config file.
+This is the standard technique used by all desktop-hiding utilities on macOS. Finder picks up the new preference and either stops drawing the desktop or re-renders it.
+
+**Why hiding is instant but restoring takes a moment:** hiding is a single "stop drawing" operation. Restoring requires Finder to re-enumerate all files in `~/Desktop`, generate thumbnails, calculate positions, and render everything. The more files on your desktop, the longer it takes. The pulsing arrow indicator in the menu bar shows when this is in progress.
+
+The preference persists in Finder's own plist — Hidecons writes nothing of its own to disk except a `UserDefaults` key for the notification setting.
 
 ---
 
@@ -78,7 +99,7 @@ xattr -cr ~/Applications/Hidecons.app
 
 Or right-click the app → Open → click "Open" in the dialog.
 
-**Desktop icons don't come back after quitting**
+**Icons don't come back after quitting**
 
 Run this in Terminal to restore manually:
 
