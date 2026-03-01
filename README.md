@@ -31,9 +31,13 @@ After launching, a grid icon appears in your menu bar.
 
 | Action | Result |
 |---|---|
-| **Left click** the icon | Instantly toggles desktop icons — no menu |
+| **Left click** the icon | Instantly toggles desktop icons |
+| **⌥⌘H** (anywhere) | Same toggle, no mouse needed |
 | **Right click** the icon | Opens settings menu |
+| Undo | Reverts the last toggle (shown in menu after any toggle) |
 | Launch at Login | Toggles auto-start on login (checkmark = enabled) |
+| Notify on Toggle | Enables a macOS notification on each hide/show |
+| Report a Bug | Opens GitHub Issues |
 | Quit | Exits — icons stay in their current state |
 
 **State is remembered across reboots.** If your icons were hidden when you shut down, they stay hidden when you start up. Hidecons reads the current Finder preference on launch and picks up from there.

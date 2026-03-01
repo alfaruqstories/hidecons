@@ -5,6 +5,29 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.7.0] — 2026-03-01
+
+### Added
+- **Global keyboard shortcut ⌥⌘H** — toggle from anywhere without touching the mouse
+      → `NSEvent.addGlobalMonitorForEvents`; monitor cleaned up on quit
+- **Undo last toggle** — right-click menu shows "Undo — Restore Icons" / "Undo — Hide Icons"
+      → Single-level undo buffer; clears after use; disabled when nothing to undo
+- **Notify on Toggle** — optional macOS notification on each hide/show
+      → Off by default; requests permission on first enable; checkmark in menu
+- **Haptic feedback** — subtle Force Touch tap on every toggle (MacBooks)
+      → `NSHapticFeedbackManager`
+- **Menu bar tooltip** — hover shows "Desktop icons: hidden / visible"
+      → `statusItem.button?.toolTip`
+- **Report a Bug** — right-click menu item opens GitHub Issues in browser
+- **Refresh Launch at Login state** — re-reads from SMAppService on every right-click open
+
+### Changed
+- Menu bar icon now uses `isTemplate = true` — adapts automatically to dark/light menu bar and coloured menu bar themes
+- `UserNotifications` imported; notification permission requested lazily on first enable
+- Menu structure: Toggle → Undo → separator → Launch at Login → Notify on Toggle → separator → Report a Bug → Quit
+
+---
+
 ## [1.6.0] — 2026-03-01
 
 ### Added
