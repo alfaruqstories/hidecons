@@ -44,7 +44,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu = NSMenu()
         menu.delegate = self
 
-        toggleItem = NSMenuItem(title: "", action: #selector(toggleDesktop), keyEquivalent: "")
+        toggleItem = NSMenuItem(title: "", action: #selector(toggleDesktop), keyEquivalent: "h")
+        toggleItem.keyEquivalentModifierMask = [.option, .command]
         toggleItem.target = self
         menu.addItem(toggleItem)
 
