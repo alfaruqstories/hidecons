@@ -8,7 +8,7 @@ MACOS="$CONTENTS/MacOS"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "🔨 Compiling $APP_NAME..."
-swiftc -O -o "/tmp/$APP_NAME" "$SCRIPT_DIR/Hidecons.swift" -framework Cocoa
+swiftc -O -o "/tmp/$APP_NAME" "$SCRIPT_DIR/Hidecons.swift" -framework Cocoa -framework ServiceManagement
 
 echo "📦 Creating app bundle..."
 mkdir -p "$MACOS"
