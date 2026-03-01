@@ -5,6 +5,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.6.0] — 2026-03-01
+
+### Added
+- **Instant toggle on left click** — click the grid icon to toggle immediately, no menu required
+- **Right-click opens settings menu** — Launch at Login and Quit accessible via right-click
+- **Custom app icon** — blue rounded-rect with white 2×2 grid; shows correctly in System Settings → Login Items
+- `generate_icon.swift` — builds `AppIcon.icns` at all required sizes during install
+- `.gitignore` — ignores build artefacts, `.DS_Store`, and local-only files
+
+### Changed
+- **State remembrance** — app no longer restores desktop icons on quit; Finder prefs persist naturally across reboots
+- `install.sh` now compiles and runs `generate_icon.swift`, packs `AppIcon.icns`, and references it in `Info.plist`
+- `CFBundleVersion` bumped to `1.6` in `Info.plist`
+
+### Removed
+- Icon restore on quit (replaced by state remembrance)
+
+---
+
 ## [1.5.0] — 2026-03-01
 
 ### Changed

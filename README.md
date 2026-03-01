@@ -29,12 +29,14 @@ The script compiles the Swift source, builds an app bundle, installs it to `~/Ap
 
 After launching, a grid icon appears in your menu bar.
 
-| Menu item | Action |
+| Action | Result |
 |---|---|
-| Hide Desktop Icons | Hides all icons, label changes to "Show Desktop Icons" |
-| Show Desktop Icons | Restores all icons |
+| **Left click** the icon | Instantly toggles desktop icons — no menu |
+| **Right click** the icon | Opens settings menu |
 | Launch at Login | Toggles auto-start on login (checkmark = enabled) |
-| Quit | Restores icons if hidden, then exits |
+| Quit | Exits — icons stay in their current state |
+
+**State is remembered across reboots.** If your icons were hidden when you shut down, they stay hidden when you start up. Hidecons reads the current Finder preference on launch and picks up from there.
 
 **Launch at Login** is built into the app — no System Settings or Login Items configuration needed.
 
@@ -49,7 +51,7 @@ defaults write com.apple.finder CreateDesktop -bool false
 killall -HUP Finder
 ```
 
-This is the standard technique used by all desktop-hiding utilities on macOS. Finder restarts in under a second and re-reads its preferences. On quit, the preference is restored to `true` before the app exits.
+This is the standard technique used by all desktop-hiding utilities on macOS. Finder restarts in under a second and re-reads its preferences. The preference persists in Finder's plist — no database or separate config file.
 
 ---
 

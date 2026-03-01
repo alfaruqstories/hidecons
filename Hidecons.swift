@@ -1,11 +1,12 @@
 import Cocoa
 import ServiceManagement
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var statusItem: NSStatusItem!
     var isHidden = false
     var toggleItem: NSMenuItem!
     var launchAtLoginItem: NSMenuItem!
+    var menu: NSMenu!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         let task = Process()
@@ -20,8 +21,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         isHidden = (output == "0" || output == "false")
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem.button?.action = #selector(handleClick)
+        statusItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
 
-        let menu = NSMenu()
+        menu = NSMenu()
+        menu.delegate = self
 
         toggleItem = NSMenuItem(title: "", action: #selector(toggleDesktop), keyEquivalent: "")
         toggleItem.target = self
@@ -39,11 +43,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         quitItem.target = self
         menu.addItem(quitItem)
 
-        statusItem.menu = menu
-
         NSApp.setActivationPolicy(.accessory)
-
         updateUI()
+    }
+
+    // Left click: instant toggle. Right click: settings menu.
+    @objc func handleClick() {
+        guard let event = NSApp.currentEvent else { return }
+        if event.type == .rightMouseUp {
+            updateLaunchAtLoginItem()
+            statusItem.menu = menu
+            statusItem.button?.performClick(nil)
+        } else {
+            toggleDesktop()
+        }
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+        statusItem.menu = nil
     }
 
     @objc func toggleDesktop() {
@@ -92,20 +109,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         updateLaunchAtLoginItem()
     }
 
+    // State is persisted in Finder prefs — no restore needed on quit.
     @objc func quit() {
-        if isHidden {
-            let task = Process()
-            task.executableURL = URL(fileURLWithPath: "/usr/bin/defaults")
-            task.arguments = ["write", "com.apple.finder", "CreateDesktop", "-bool", "true"]
-            try? task.run()
-            task.waitUntilExit()
-
-            let killTask = Process()
-            killTask.executableURL = URL(fileURLWithPath: "/usr/bin/killall")
-            killTask.arguments = ["-HUP", "Finder"]
-            try? killTask.run()
-            killTask.waitUntilExit()
-        }
         NSApp.terminate(nil)
     }
 
