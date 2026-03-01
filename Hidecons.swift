@@ -111,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func updateUI() {
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: isHidden ? "eye.slash" : "eye", accessibilityDescription: "Hidecons")
+            button.image = NSImage(systemSymbolName: isHidden ? "square.grid.2x2.fill" : "square.grid.2x2", accessibilityDescription: "Hidecons")
         }
         updateToggleItem()
         updateLaunchAtLoginItem()
